@@ -1,0 +1,91 @@
+/* Header.css */
+
+/* Base styles for the navbar */
+.navbar {
+  transition: all 2s ease-in;
+}
+
+/* Mobile screen styles */
+@media (max-width: 991px) {
+  .navbar-toggler {
+    display: block;
+    border: none; /* Remove Bootstrap's default border */
+    background: transparent; /* Remove Bootstrap's default background */
+    outline: none; /* Remove Bootstrap's default outline */
+    font-size: 24px; /* Adjust font size as needed */
+  }
+
+  .navbar-toggler-icon {
+    display: none; /* Hide Bootstrap's default icon */
+  }
+
+  .custom-toggler-icon {
+    display: inline-block;
+    width: 30px; /* Adjust width */
+    height: 30px; /* Adjust height */
+    text-align: center;
+    line-height: 30px; /* Center the icon vertically */
+    color: #000; /* Adjust color as needed */
+    font-size: 24px; /* Adjust font size */
+  }
+
+  .navbar-collapse {
+    max-height: 0; /* Hide content by default */
+    overflow: hidden; /* Hide overflow content */
+    opacity: 0; /* Hide content with opacity */
+    transition: max-height 2s ease, opacity 2s ease; /* Transition effect */
+    display: flex; /* Flex to ensure proper alignment */
+    flex-direction: column; /* Align items in a column */
+  }
+
+  .navbar-collapse.show {
+    max-height: 1000px; /* Adjust based on the content height */
+    opacity: 1; /* Show content with opacity */
+  }
+
+  .navbar-nav {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    text-align: center;
+    padding: 0;
+    margin: 0;
+  }
+
+  .navbar-nav .nav-item {
+    margin: 10px 0;
+  }
+
+  .navbar-brand {
+    text-align: center;
+    margin-bottom: 10px;
+  }
+
+  .nav-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* Remove overlapping icons */
+  .nav-link .icon {
+    margin-right: 5px; /* Adjust as needed */
+  }
+}
+
+/* Ensure styles remain unchanged for larger screens */
+@media (min-width: 992px) {
+  .navbar-toggler {
+    display: none;
+  }
+
+  .navbar-collapse {
+    display: flex !important;
+    max-height: none; /* Ensure it is not limited by max-height */
+    opacity: 1; /* Ensure it is fully visible */
+  }
+
+  .navbar-nav {
+    text-align: left;
+  }
+}

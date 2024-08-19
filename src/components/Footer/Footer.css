@@ -1,0 +1,41 @@
+/* Footer.css */
+
+.footer {
+    background-color: white; /* Set background to whitesmoke */
+    color: black; /* Set text color to black */
+    padding: 20px 0; /* Padding for height */
+    min-height: 100px; /* Set a minimum height */
+    width: 100%; /* Ensure the footer takes the full width */
+    position: relative; /* Default position */
+    align-items: center;
+  }
+  
+  .footer h5 {
+    margin: 0;
+  }
+  
+  body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+  }
+  
+  .container-fluide {
+    width: 100%;
+    padding: 0;
+  }
+  
+  .container {
+    width: 100%;
+  }
+  
+  .row {
+    margin: 0;
+    width: 100%;
+  }
+  
+  footer {
+    position: relative; /* Ensure it's part of the normal flow */
+    bottom: 0;
+  }
+  
