@@ -1,23 +1,35 @@
-import React from 'react'
-import { auth } from '../Firebase/Firebase'
-import { useNavigate } from 'react-router-dom';
+import React from "react";
+import { signOut } from "firebase/auth";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { useNavigate } from "react-router-dom";
+import { auth } from "../../../firebase/conifg";
 
 const Logout = () => {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
 
-    const handleLogout = async () => {
-        // try {
-        //     await auth.signOut();
-        //     navigate('/login');
-        // } catch (error) {
-        //     console.error('Error logging out:', error);
-        // }
-    };
-    return (
-        <button className="dropdown-item" onClick={handleLogout}>
-            Logout
-        </button>
-    )
-}
+  const handleLogout = async () => {
+    await signOut(auth)
+      .then(() => {
+        toast.success("Logg Out successfully !!");
+        // navigate("/");
+        setTimeout(() => {
+          navigate("/login"); // Delay the navigation slightly
+        }, 2000);
+      })
+      .catch((error) => {
+        toast.error(error.message);
+      });
+  };
 
-export default Logout
+  return (
+    <>
+      <button className="dropdown-item" onClick={handleLogout}>
+        Logout
+      </button>
+      <ToastContainer />
+    </>
+  );
+};
+
+export default Logout;
