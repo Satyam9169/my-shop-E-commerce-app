@@ -1,11 +1,16 @@
 import React, { useState } from "react";
 import "./Login.css";
 import { Link, useNavigate } from "react-router-dom";
-import { signInWithEmailAndPassword } from "firebase/auth";
+import {
+  GoogleAuthProvider,
+  signInWithEmailAndPassword,
+  signInWithPopup,
+} from "firebase/auth";
 import { auth } from "../../../firebase/conifg";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import Loading from "../../../components/Loader/Loading";
+// import Loading from "../../../components/Loader/Loading";
+import { FaGoogle } from "react-icons/fa";
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -16,6 +21,22 @@ const Login = () => {
   const navigate = useNavigate();
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false); // Loading state
+
+  const provider = new GoogleAuthProvider();
+  const signInWithGoogle = () => {
+    signInWithPopup(auth, provider)
+      .then((result) => {
+        // The signed-in user info.
+        const user = result.user;
+        toast.success("Login Successfully !!");
+        setTimeout(() => {
+          navigate("/");
+        }, 2000);
+      })
+      .catch((error) => {
+        toast.error(error.message);
+      });
+  };
 
   const handleChange = (e) => {
     const { id, value } = e.target;
@@ -106,13 +127,23 @@ const Login = () => {
               disabled={loading}>
               {loading ? "Loading..." : "Submit"}
             </button>
+            <br />
+            <br />
+            <p className="text-center">---or---</p>
+            <div>
+              <span
+                className="btn btn-danger"
+                size={35}
+                onClick={signInWithGoogle}>
+                <FaGoogle />
+              </span>
+            </div>
             <div className="mb-3">
               <Link to={"/register"}>Don't Have account yet</Link>
             </div>
           </form>
         </div>
       </section>
-      {loading && <Loading />} {/* Show loading spinner during login */}
     </>
   );
 };

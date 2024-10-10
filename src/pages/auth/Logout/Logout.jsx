@@ -11,7 +11,7 @@ const Logout = () => {
   const handleLogout = async () => {
     await signOut(auth)
       .then(() => {
-        toast.success("Logg Out successfully !!");
+        toast.success("Logout successfully !!");
         // navigate("/");
         setTimeout(() => {
           navigate("/login"); // Delay the navigation slightly
