@@ -59,8 +59,8 @@ const Login = () => {
       setLoading(true); // Start loading
       setErrors(validationErrors);
       const { email, password } = formData;
-      console.log("email => " + email);
-      console.log("password => " + password);
+      // console.log("email => " + email);
+      // console.log("password => " + password);
       try {
         await signInWithEmailAndPassword(auth, email, password);
         toast.success("User Logged-In Successfully !!");
