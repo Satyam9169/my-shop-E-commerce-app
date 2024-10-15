@@ -1,8 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { BsFillPersonFill, BsCart } from "react-icons/bs";
 import { Link } from "react-router-dom";
 import "./Header.css";
 import { Logout } from "../../pages";
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "../../firebase/conifg";
 
 const logo = (
   <div>
@@ -23,10 +25,24 @@ const cart = (
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [displayName, setDisplayName] = useState(false);
 
   const handleToggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
+
+  //Monitor currently sign in user
+  useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        const uid = user.uid;
+        console.log(user.displayName);
+        setDisplayName(user.displayName);
+      } else {
+        setDisplayName("");
+      }
+    });
+  }, []);
 
   return (
     <nav className="navbar navbar-expand-lg bg-body shadow">
@@ -62,7 +78,7 @@ const Header = () => {
             <li className="nav-item">
               <Link className="nav-link active" aria-current="page" to={"/"}>
                 <BsFillPersonFill className="icon user mb-1" />
-                Hi Satyam
+                Hi, {displayName}
               </Link>
             </li>
             <li className="nav-item">

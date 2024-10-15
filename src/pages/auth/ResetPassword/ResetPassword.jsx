@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "./ResetPassword.css";
 import { sendPasswordResetEmail } from "firebase/auth";
 import { auth } from "../../../firebase/conifg";
+import { toast } from "react-toastify";
 
 const ResetPassword = () => {
   const [email, setEmail] = useState("");
@@ -26,6 +27,9 @@ const ResetPassword = () => {
         .then(() => {
           setMessage("Password reset email sent successfully");
           setEmail("");
+          setTimeout(() => {
+            toast.success("Link sent successfully !!");
+          }, 1000);
         })
         .catch((error) => {
           setError(error.message);
