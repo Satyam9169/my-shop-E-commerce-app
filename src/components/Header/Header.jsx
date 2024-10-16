@@ -25,17 +25,13 @@ const cart = (
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [displayName, setDisplayName] = useState(false);
-
-  const handleToggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen);
-  };
+  const [displayName, setDisplayName] = useState("");
 
   //Monitor currently sign in user
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
-        const uid = user.uid;
+        // const uid = user.uid;
         console.log(user.displayName);
         setDisplayName(user.displayName);
       } else {
@@ -43,6 +39,10 @@ const Header = () => {
       }
     });
   }, []);
+
+  const handleToggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
 
   return (
     <nav className="navbar navbar-expand-lg bg-body shadow">
@@ -53,14 +53,15 @@ const Header = () => {
           type="button"
           onClick={handleToggleMenu}
           aria-controls="navbarSupportedContent"
-          aria-expanded={isMenuOpen}
+          aria-expanded={isMenuOpen ? "true" : "false"}
           aria-label="Toggle navigation">
-          <span className="custom-toggler-icon">
+          <span className="navbar-toggler-icon">
             {isMenuOpen ? "✖" : "☰"} {/* Show/hide icon */}
           </span>
         </button>
+
         <div
-          className={`navbar-collapse ${isMenuOpen ? "show" : ""}`}
+          className={`collapse navbar-collapse ${isMenuOpen ? "show" : ""}`}
           id="navbarSupportedContent">
           <ul className="navbar-nav me-auto mb-2 mb-lg-0">
             <li className="nav-item">
