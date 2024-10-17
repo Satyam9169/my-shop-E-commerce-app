@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { BsFillPersonFill, BsCart } from "react-icons/bs";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./Header.css";
 import { Logout } from "../../pages";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../../firebase/conifg";
+import { useDispatch } from "react-redux";
+import { SET_ACTIVE_USER } from "../../redux/slice/authSlice";
 
 const logo = (
   <div>
@@ -26,6 +28,7 @@ const cart = (
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [displayName, setDisplayName] = useState("");
+  const dispatch = useDispatch();
 
   //Monitor currently sign in user
   useEffect(() => {
@@ -34,6 +37,11 @@ const Header = () => {
         const uid = user.uid;
         console.log(user.displayName);
         setDisplayName(user.displayName);
+        dispatch(SET_ACTIVE_USER({
+          email: "",
+          userName: "",
+          userID: ""
+        }))
       } else {
         setDisplayName("");
       }
@@ -76,10 +84,11 @@ const Header = () => {
             </li>
           </ul>
           <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
+            {/* Display the user's displayName or email */}
             <li className="nav-item">
               <Link className="nav-link active" aria-current="page" to={"/"}>
                 <BsFillPersonFill className="icon user mb-1" />
-                Hi, {displayName}
+                Hi,{displayName}
               </Link>
             </li>
             <li className="nav-item">
