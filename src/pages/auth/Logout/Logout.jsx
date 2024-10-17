@@ -9,25 +9,27 @@ const Logout = () => {
   const navigate = useNavigate();
 
   const handleLogout = async () => {
-    await signOut(auth)
-      .then(() => {
-        toast.success("Logout successfully !!");
-        // navigate("/");
-        setTimeout(() => {
-          navigate("/login"); // Delay the navigation slightly
-        }, 2000);
-      })
-      .catch((error) => {
-        toast.error(error.message);
-      });
+    try {
+      await signOut(auth);
+      // e.stopPropagation();
+      //navigate("/login"); // Delay the navigation slightly
+      console.log("logout successfull !!");
+      alert("Logout successfull !!");
+      // toast.success("Logout successfully !!");
+      setTimeout(() => {
+        navigate("/login");
+      }, 2000);
+    } catch (error) {
+      toast.error(error.message);
+    }
   };
 
   return (
     <>
+      <ToastContainer />
       <button className="dropdown-item" onClick={handleLogout}>
         Logout
       </button>
-      <ToastContainer />
     </>
   );
 };

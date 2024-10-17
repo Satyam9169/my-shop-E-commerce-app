@@ -27,8 +27,9 @@ const Login = () => {
     signInWithPopup(auth, provider)
       .then((result) => {
         // The signed-in user info.
-        const user = result.user;
-        toast.success("Login Successfully !!");
+        // const user = result.user;
+        // toast.success("Login Successfully !!");
+        alert("Login successfully !!");
         setTimeout(() => {
           navigate("/");
         }, 2000);
@@ -63,7 +64,9 @@ const Login = () => {
       // console.log("password => " + password);
       try {
         await signInWithEmailAndPassword(auth, email, password);
-        toast.success("User Logged-In Successfully !!");
+        // toast.success("Logged-In Successfully !!");
+        alert("Login successfully !!");
+        console.log("Login successfuly !!");
         // navigate("/");
         setFormData({
           email: "",
