@@ -9,19 +9,30 @@ const Logout = () => {
   const navigate = useNavigate();
 
   const handleLogout = async () => {
-    try {
-      await signOut(auth);
-      // e.stopPropagation();
-      //navigate("/login"); // Delay the navigation slightly
-      console.log("logout successfull !!");
-      alert("Logout successfull !!");
-      // toast.success("Logout successfully !!");
-      setTimeout(() => {
-        navigate("/login");
-      }, 2000);
-    } catch (error) {
-      toast.error(error.message);
-    }
+    auth
+      .signOut()
+      .then(() => {
+        console.log("User signed out");
+        alert("Logout successfull !!");
+        setTimeout(() => {
+          navigate("/login");
+        }, 2000);
+      })
+      .catch((error) => {
+        console.error("Error signing out: ", error);
+      });
+    // try {
+    //   await signOut(auth);
+    //   // e.stopPropagation();
+    //   //navigate("/login"); // Delay the navigation slightly
+    //   console.log("logout successfull !!");
+    //   // toast.success("Logout successfully !!");
+    //   setTimeout(() => {
+    //     navigate("/login");
+    //   }, 2000);
+    // } catch (error) {
+    //   toast.error(error.message);
+    // }
   };
 
   return (
