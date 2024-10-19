@@ -23,7 +23,7 @@ const Logout = () => {
       toast.error(error.message);
     }
   };
-  
+
   return (
     <>
       <ToastContainer />
