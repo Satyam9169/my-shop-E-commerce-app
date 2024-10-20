@@ -97,12 +97,6 @@ const Header = () => {
               </li>
             )}
 
-            {/* <li className="nav-item">
-              <Link className="nav-link active" aria-current="page" to={"/"}>
-                <BsFillPersonFill className="icon user mb-1" />
-                Hi,{displayName}
-              </Link>
-            </li> */}
             <li className="nav-item">
               <Link className="nav-link" to={"/login"}>
                 Login
