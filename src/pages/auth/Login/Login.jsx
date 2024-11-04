@@ -28,16 +28,36 @@ const Login = () => {
       .then((result) => {
         // The signed-in user info.
         // const user = result.user;
-        // toast.success("Login Successfully !!");
+
+        // Success message
         alert("Login successfully !!");
+
+        // Navigate after a short delay
         setTimeout(() => {
           navigate("/");
         }, 2000);
       })
       .catch((error) => {
+        // Display error message in toast notification
         toast.error(error.message);
       });
   };
+
+  // () => {
+  //   signInWithPopup(auth, provider)
+  //     .then((result) => {
+  //       // The signed-in user info.
+  //       // const user = result.user;
+  //       // toast.success("Login Successfully !!");
+  //       alert("Login successfully !!");
+  //       setTimeout(() => {
+  //         navigate("/");
+  //       }, 2000);
+  //     })
+  //     .catch((error) => {
+  //       toast.error(error.message);
+  //     });
+  // };
 
   const handleChange = (e) => {
     const { id, value } = e.target;

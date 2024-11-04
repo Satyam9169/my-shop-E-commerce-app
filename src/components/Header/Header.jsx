@@ -37,19 +37,20 @@ const Header = () => {
         console.log(user);
         const uid = user.uid;
         console.log(user.displayName);
-        setDisplayName(user.displayName || user.email);
+        setDisplayName(user.displayName);
+        setDisplayName(user.email);
         dispatch(
           SET_ACTIVE_USER({
-            email: user.email || "",
-            userName: user.userName || "",
-            userID: user.uid || "",
+            email: user.email,
+            userName: user.displayName,
+            userID: user.uid,
           })
         );
       } else {
         setDisplayName("");
       }
     });
-  }, []);
+  }, [dispatch]);
 
   const handleToggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
