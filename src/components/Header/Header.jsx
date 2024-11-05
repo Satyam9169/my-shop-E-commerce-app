@@ -4,9 +4,10 @@ import { Link } from "react-router-dom";
 import "./Header.css";
 import { Logout } from "../../pages";
 import { onAuthStateChanged } from "firebase/auth";
-import { auth } from "../../firebase/conifg";
+import { auth, db } from "../../firebase/conifg";
 import { useDispatch } from "react-redux";
 import { SET_ACTIVE_USER } from "../../redux/slice/authSlice";
+import { doc, getDoc } from "firebase/firestore";
 
 const logo = (
   <div>
@@ -34,23 +35,47 @@ const Header = () => {
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
-        console.log(user);
-        const uid = user.uid;
-        console.log(user.displayName);
-        setDisplayName(user.displayName);
-        setDisplayName(user.email);
-        dispatch(
-          SET_ACTIVE_USER({
-            email: user.email,
-            userName: user.displayName,
-            userID: user.uid,
-          })
-        );
-      } else {
-        setDisplayName("");
+        const userRef = doc(db, "users", user.uid);
+        getDoc(userRef).then((docSnap) => {
+          if (docSnap.exists()) {
+            const userData = docSnap.data();
+            setDisplayName(`${userData.firstName} ${userData.lastName}`);
+            dispatch(
+              SET_ACTIVE_USER({
+                firstName: userData.firstName,
+                lastName: userData.lastName,
+                email: user.email,
+                userName: user.displayName,
+                userID: user.uid,
+              })
+            );
+          } else {
+            setDisplayName("");
+          }
+          // console.log(user.firstName + " : " + user.lastName)
+        });
       }
+      // if (user) {
+      //   const fullName = user.displayName || ""; // fallback in case displayName is null
+      //   const [firstName, lastName] = fullName.split(" "); // this will split based on the first space
+      //   setDisplayName(fullName);
+      //   console.log(user);
+      //   const uid = user.uid;
+      //   setDisplayName(fullName);
+      //   dispatch(
+      //     SET_ACTIVE_USER({
+      //       firstName: user.firstName || "",
+      //       lastName: user.lastName || "",
+      //       email: user.email,
+      //       userName: user.displayName,
+      //       userID: user.uid,
+      //     })
+      //   );
+      // } else {
+      //   setDisplayName("");
+      // }
     });
-  }, [dispatch]);
+  }, []);
 
   const handleToggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);

@@ -5,6 +5,8 @@ const initialState = {
   email: null,
   userName: null,
   userID: null,
+  firstName: null,
+  lastName: null,
 };
 
 const authSlice = createSlice({
@@ -13,11 +15,13 @@ const authSlice = createSlice({
   reducers: {
     SET_ACTIVE_USER: (state, action) => {
       console.log(action.payload);
-      const { email, userName, userID } = action.payload;
+      const { email, userName, userID, firstName, lastName } = action.payload;
       state.isLoggedIn = true;
       state.email = email;
       state.userName = userName;
       state.userID = userID;
+      state.firstName = firstName;
+      state.lastName = lastName;
     },
   },
 });
@@ -28,5 +32,7 @@ export const selectIsLoggedIn = (state) => state.auth.isLoggedIn;
 export const selectEmail = (state) => state.auth.email;
 export const selectUserName = (state) => state.auth.userName;
 export const selectUserID = (state) => state.auth.userID;
+export const selectFirstName = (state) => state.auth.firstName;
+export const selectLastName = (state) => state.auth.lastName;
 
 export default authSlice.reducer;
