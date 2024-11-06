@@ -7,7 +7,7 @@ import { onAuthStateChanged } from "firebase/auth";
 import { auth, db } from "../../firebase/conifg";
 import { useDispatch } from "react-redux";
 import { SET_ACTIVE_USER } from "../../redux/slice/authSlice";
-import { doc, getDoc } from "firebase/firestore";
+import { doc, getDoc, setDoc } from "firebase/firestore";
 
 const logo = (
   <div>
@@ -32,50 +32,95 @@ const Header = () => {
   const dispatch = useDispatch();
 
   //Monitor currently sign in user
+  // useEffect(() => {
+  //   onAuthStateChanged(auth, async (user) => {
+  //     if (user) {
+  //       const userRef = doc(db, "users", user.uid);
+  //       const docSnap = await getDoc(userRef);
+
+  //       if (docSnap.exists()) {
+  //         // If user data exists in Firestore, use it
+  //         const userData = docSnap.data();
+  //         setDisplayName(`${userData.firstName} ${userData.lastName}`);
+  //         dispatch(
+  //           SET_ACTIVE_USER({
+  //             firstName: userData.firstName,
+  //             lastName: userData.lastName,
+  //             email: user.email,
+  //             userName: user.displayName,
+  //             userID: user.uid,
+  //           })
+  //         );
+  //       } else {
+  // If user data doesn't exist in Firestore, use Google displayName
+  //         const [firstName, lastName] = user.displayName
+  //  ? user.displayName.split(" ")
+  //           : ["", ""]; // Fallback if displayName is null
+
+  // Optionally save the Google login name as a new Firestore document
+  //         await setDoc(userRef, { firstName, lastName, email: user.email });
+
+  //         setDisplayName(`${firstName} ${lastName}`);
+  //         dispatch(
+  //           SET_ACTIVE_USER({
+  //             firstName: firstName || "",
+  //             lastName: lastName || "",
+  //             email: user.email,
+  //             userName: user.displayName,
+  //             userID: user.uid,
+  //           })
+  //         );
+  //       }
+  //     } else {
+  //       setDisplayName("");
+  //     }
+  //   });
+  // }, [dispatch]);
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
-      if (user) {
-        const userRef = doc(db, "users", user.uid);
-        getDoc(userRef).then((docSnap) => {
-          if (docSnap.exists()) {
-            const userData = docSnap.data();
-            setDisplayName(`${userData.firstName} ${userData.lastName}`);
-            dispatch(
-              SET_ACTIVE_USER({
-                firstName: userData.firstName,
-                lastName: userData.lastName,
-                email: user.email,
-                userName: user.displayName,
-                userID: user.uid,
-              })
-            );
-          } else {
-            setDisplayName("");
-          }
-          // console.log(user.firstName + " : " + user.lastName)
-        });
-      }
-      // if (user) {
-      //   const fullName = user.displayName || ""; // fallback in case displayName is null
-      //   const [firstName, lastName] = fullName.split(" "); // this will split based on the first space
-      //   setDisplayName(fullName);
-      //   console.log(user);
-      //   const uid = user.uid;
-      //   setDisplayName(fullName);
-      //   dispatch(
-      //     SET_ACTIVE_USER({
-      //       firstName: user.firstName || "",
-      //       lastName: user.lastName || "",
-      //       email: user.email,
-      //       userName: user.displayName,
-      //       userID: user.uid,
-      //     })
-      //   );
-      // } else {
-      //   setDisplayName("");
+      //     if (user) {
+      //       const userRef = doc(db, "users", user.uid);
+      //       getDoc(userRef).then((docSnap) => {
+      //         if (docSnap.exists()) {
+      //           const userData = docSnap.data();
+      //           setDisplayName(`${userData.firstName} ${userData.lastName}`);
+      //           setDisplayName(displayName);
+      //           dispatch(
+      //             SET_ACTIVE_USER({
+      //               firstName: userData.firstName,
+      //               lastName: userData.lastName,
+      //               email: user.email,
+      //               userName: user.displayName,
+      //               userID: user.uid,
+      //             })
+      //           );
+      //         } else {
+      //           setDisplayName("");
+      //         }
+      //       });
       // }
+      if (user) {
+        if (user.displayName === null) {
+          const u1 = user.email.substring(0, user.email.indexOf("@"));
+          const uName = u1.charAt(0).toUpperCase() + u1.slice(1);
+          setDisplayName(uName);
+        } else {
+          setDisplayName(user.displayName);
+        }
+        dispatch(
+          SET_ACTIVE_USER({
+            firstName: user.firstName || "",
+            lastName: user.lastName || "",
+            email: user.email,
+            userName: user.displayName ? user.displayName : displayName,
+            userID: user.uid,
+          })
+        );
+      } else {
+        setDisplayName("");
+      }
     });
-  }, []);
+  }, [displayName, dispatch]);
 
   const handleToggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
