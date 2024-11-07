@@ -6,8 +6,11 @@ import { Logout } from "../../pages";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth, db } from "../../firebase/conifg";
 import { useDispatch } from "react-redux";
-import { SET_ACTIVE_USER } from "../../redux/slice/authSlice";
-import { doc, getDoc, setDoc } from "firebase/firestore";
+import {
+  SET_ACTIVE_USER,
+  REMOVE_ACTIVE_USER,
+} from "../../redux/slice/authSlice";
+// import { doc, getDoc, setDoc } from "firebase/firestore";
 
 const logo = (
   <div>
@@ -32,6 +35,7 @@ const Header = () => {
   const dispatch = useDispatch();
 
   //Monitor currently sign in user
+
   // useEffect(() => {
   //   onAuthStateChanged(auth, async (user) => {
   //     if (user) {
@@ -39,7 +43,7 @@ const Header = () => {
   //       const docSnap = await getDoc(userRef);
 
   //       if (docSnap.exists()) {
-  //         // If user data exists in Firestore, use it
+  // If user data exists in Firestore, use it
   //         const userData = docSnap.data();
   //         setDisplayName(`${userData.firstName} ${userData.lastName}`);
   //         dispatch(
@@ -54,7 +58,7 @@ const Header = () => {
   //       } else {
   // If user data doesn't exist in Firestore, use Google displayName
   //         const [firstName, lastName] = user.displayName
-  //  ? user.displayName.split(" ")
+  //          ? user.displayName.split(" ")
   //           : ["", ""]; // Fallback if displayName is null
 
   // Optionally save the Google login name as a new Firestore document
@@ -76,29 +80,9 @@ const Header = () => {
   //     }
   //   });
   // }, [dispatch]);
+
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
-      //     if (user) {
-      //       const userRef = doc(db, "users", user.uid);
-      //       getDoc(userRef).then((docSnap) => {
-      //         if (docSnap.exists()) {
-      //           const userData = docSnap.data();
-      //           setDisplayName(`${userData.firstName} ${userData.lastName}`);
-      //           setDisplayName(displayName);
-      //           dispatch(
-      //             SET_ACTIVE_USER({
-      //               firstName: userData.firstName,
-      //               lastName: userData.lastName,
-      //               email: user.email,
-      //               userName: user.displayName,
-      //               userID: user.uid,
-      //             })
-      //           );
-      //         } else {
-      //           setDisplayName("");
-      //         }
-      //       });
-      // }
       if (user) {
         if (user.displayName === null) {
           const u1 = user.email.substring(0, user.email.indexOf("@"));
