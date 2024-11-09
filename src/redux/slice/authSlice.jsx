@@ -5,8 +5,8 @@ const initialState = {
   email: null,
   userName: null,
   userID: null,
-  firstName: null,
-  lastName: null,
+  // firstName: null,
+  // lastName: null,
 };
 
 const authSlice = createSlice({
@@ -15,13 +15,13 @@ const authSlice = createSlice({
   reducers: {
     SET_ACTIVE_USER: (state, action) => {
       console.log(action.payload);
-      const { email, userName, userID, firstName, lastName } = action.payload;
+      const { email, userName, userID } = action.payload;
       state.isLoggedIn = true;
       state.email = email;
       state.userName = userName;
       state.userID = userID;
-      state.firstName = firstName;
-      state.lastName = lastName;
+      // state.firstName = firstName;
+      // state.lastName = lastName;
     },
     REMOVE_ACTIVE_USER: (state, action) => {
       state.isLoggedIn = false;

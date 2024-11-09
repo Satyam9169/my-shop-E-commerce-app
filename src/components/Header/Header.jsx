@@ -94,9 +94,9 @@ const Header = () => {
         }
         dispatch(
           SET_ACTIVE_USER({
-            firstName: user.firstName || "",
+            // firstName: user.firstName || "",
             // lastName: user.lastName || "",
-            // email: user.email,
+            email: user.email,
             userName: user.displayName ? user.displayName : displayName,
             userID: user.uid,
           })
