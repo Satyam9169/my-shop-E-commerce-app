@@ -1,15 +1,16 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { BsFillPersonFill, BsCart } from "react-icons/bs";
 import { Link } from "react-router-dom";
 import "./Header.css";
 import { Logout } from "../../pages";
 import { onAuthStateChanged } from "firebase/auth";
-import { auth, db } from "../../firebase/conifg";
+import { auth } from "../../firebase/conifg";
 import { useDispatch } from "react-redux";
 import {
   SET_ACTIVE_USER,
   REMOVE_ACTIVE_USER,
 } from "../../redux/slice/authSlice";
+import { ShowOnLogin, ShowOnLogout } from "../HiddenLogin/HiddenLogin";
 // import { doc, getDoc, setDoc } from "firebase/firestore";
 
 const logo = (
@@ -94,14 +95,15 @@ const Header = () => {
         dispatch(
           SET_ACTIVE_USER({
             firstName: user.firstName || "",
-            lastName: user.lastName || "",
-            email: user.email,
+            // lastName: user.lastName || "",
+            // email: user.email,
             userName: user.displayName ? user.displayName : displayName,
             userID: user.uid,
           })
         );
       } else {
         setDisplayName("");
+        dispatch(REMOVE_ACTIVE_USER({}));
       }
     });
   }, [displayName, dispatch]);
@@ -143,37 +145,43 @@ const Header = () => {
           </ul>
           <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
             {/* Display the user's displayName or email */}
-            {displayName && (
+            <ShowOnLogin>
               <li className="nav-item">
                 <Link className="nav-link active" aria-current="page" to={"/"}>
                   <BsFillPersonFill className="icon user mb-1" />
                   Hi, {displayName}
                 </Link>
               </li>
-            )}
+            </ShowOnLogin>
 
-            <li className="nav-item">
-              <Link className="nav-link" to={"/login"}>
-                Login
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link className="nav-link" to={"/register"}>
-                Register
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link className="nav-link" to={"/order-history"}>
-                My Orders
-              </Link>
-            </li>
+            <ShowOnLogout>
+              <li className="nav-item">
+                <Link className="nav-link" to={"/login"}>
+                  Login
+                </Link>
+              </li>
+              <li className="nav-item">
+                <Link className="nav-link" to={"/register"}>
+                  Register
+                </Link>
+              </li>
+            </ShowOnLogout>
+
             {cart}
-            {/* Logout functionality */}
-            <li className="nav-item">
-              <Link className="nav-link" to={"/logout"}>
-                <Logout />
-              </Link>
-            </li>
+            <ShowOnLogin>
+              <li className="nav-item">
+                <Link className="nav-link" to={"/order-history"}>
+                  My Orders
+                </Link>
+              </li>
+
+              {/* Logout functionality */}
+              <li className="nav-item">
+                <Link className="nav-link" to={"/logout"}>
+                  <Logout />
+                </Link>
+              </li>
+            </ShowOnLogin>
           </ul>
         </div>
       </div>
