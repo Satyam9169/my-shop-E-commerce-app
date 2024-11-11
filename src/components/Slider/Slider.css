@@ -1,0 +1,86 @@
+/* Prevent any horizontal overflow on the body */
+body {
+    margin: 0;
+    overflow-x: hidden;
+  }
+  
+  .slider {
+    position: relative;
+    width: 100vw;
+    /* height: 100vh; */
+    margin: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    box-sizing: border-box;
+    background-color: #f5f5f5; /* Optional: Add a background color */
+  }
+  
+  .slide {
+    display: none;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .slide.active {
+    display: flex;
+  }
+  
+  .container {
+    position: relative;
+    max-width: 80%; /* Adjust width as needed */
+    max-height: 80%; /* Adjust height as needed */
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .container img {
+    width: 100%;
+    height: auto; /* Keeps aspect ratio */
+    object-fit: cover; /* Ensures image fits within the container */
+  }
+  
+  .prev,
+  .next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 48px;
+    color: black; /* Makes arrows black */
+    cursor: pointer;
+    z-index: 10;
+    opacity: 0.7;
+    transition: opacity 0.3s;
+  }
+  
+  .prev:hover,
+  .next:hover {
+    opacity: 1; /* Increases opacity on hover */
+  }
+  
+  .prev {
+    left: 20px; /* Position on the left side of the image */
+  }
+  
+  .next {
+    right: 20px; /* Position on the right side of the image */
+  }
+  
+  .content {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    color: #fff;
+    background: rgba(0, 0, 0, 0.6);
+    padding: 10px;
+    border-radius: 5px;
+    max-width: 90%;
+  }
+  
